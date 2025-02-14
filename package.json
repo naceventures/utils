@@ -1,0 +1,51 @@
+{
+   "name": "@alpha/utils",
+   "description": "Utilities",
+   "author": "eakl",
+   "version": "1.0.0",
+   "private": true,
+   "type": "module",
+   "scripts": {
+      "preinstall": "npx only-allow pnpm",
+      "dev": "tsx watch ./src/index.ts",
+      "build": "shx rm -rf ./dist/* && tsup",
+      "test": "vitest"
+   },
+   "engines": {
+      "node": ">=22.14.x"
+   },
+   "files": [
+      "dist"
+   ],
+   "main": "index.js",
+   "exports": {
+      ".": {
+         "types": "./dist/index.d.ts",
+         "import": "./dist/index.js",
+         "default": "./dist/index.js"
+      }
+   },
+   "keywords": [
+      "core",
+      "utilities"
+   ],
+   "devDependencies": {
+      "@eslint/compat": "^1.2.6",
+      "@eslint/js": "^9.20.0",
+      "eslint": "^9.20.1",
+      "eslint-config-prettier": "^10.0.1",
+      "prettier": "^3.5.1",
+      "shx": "^0.3.4",
+      "tsup": "^8.3.6",
+      "tsx": "^4.19.2",
+      "typescript": "^5.7.3",
+      "typescript-eslint": "^8.24.0",
+      "vitest": "^3.0.5"
+   },
+   "dependencies": {
+      "@js-temporal/polyfill": "^0.4.4",
+      "@oslojs/crypto": "^1.0.1",
+      "@oslojs/encoding": "^1.1.0",
+      "zod": "^3.24.2"
+   }
+}
