@@ -89,3 +89,5 @@ jobs:
               run: |
                   git fetch origin
                   git checkout develop
+                  git merge --no-ff main -m "chore: merge main into develop after release"
+                  git push origin develop
