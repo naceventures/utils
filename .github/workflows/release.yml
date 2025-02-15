@@ -5,6 +5,11 @@ on:
         branches:
             - main
 
+permissions:
+    contents: write
+    issues: write
+    pull-requests: write
+
 jobs:
     test:
         runs-on: ubuntu-latest
@@ -70,14 +75,10 @@ jobs:
               if: steps.check.outputs.version_changed == 'true'
               run: pnpm run build
 
-            - name: Publish to NPM
-              if: steps.check.outputs.version_changed == 'true'
-              run: npm publish --access public --no-git-checks
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
             - name: Tag release
               if: steps.check.outputs.version_changed == 'true'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   git config --local user.name "github-actions[bot]"
                   git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -86,8 +87,16 @@ jobs:
 
             - name: Merge main back into develop
               if: steps.check.outputs.version_changed == 'true'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   git fetch origin
                   git checkout develop
                   git merge --no-ff main -m "chore: merge main into develop after release"
                   git push origin develop
+
+            - name: Publish to NPM
+              if: steps.check.outputs.version_changed == 'true'
+              run: npm publish --access public --no-git-checks
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
