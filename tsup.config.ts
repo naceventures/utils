@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup'
 // import { dependencies } from './package.json'
 
-export default defineConfig({
+export default defineConfig(({ watch }) => ({
    entry: {
       index: 'src/index.ts',
    },
@@ -10,9 +10,9 @@ export default defineConfig({
    format: 'esm',
    bundle: true,
    // external: Object.keys(dependencies),
-   minify: true,
+   minify: watch ? false : true,
    treeshake: true,
    dts: true,
-   sourcemap: true,
+   sourcemap: watch ? true : false,
    clean: true,
-})
+}))

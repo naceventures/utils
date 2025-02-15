@@ -11,4 +11,13 @@ export default {
    singleQuote: true,
    quoteProps: 'consistent',
    trailingComma: 'all',
+   overrides: [
+      {
+         files: '*.yml',
+         options: {
+            parser: 'yaml',
+            tabWidth: 4,
+         },
+      },
+   ],
 }

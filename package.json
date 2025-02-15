@@ -1,22 +1,10 @@
 {
-   "name": "@alpha/utils",
+   "name": "@naceventures/utils",
    "description": "Utilities",
-   "author": "eakl",
-   "version": "1.0.0",
-   "private": true,
+   "author": "naceventures",
+   "version": "1.0.1",
+   "private": false,
    "type": "module",
-   "scripts": {
-      "preinstall": "npx only-allow pnpm",
-      "dev": "tsx watch ./src/index.ts",
-      "build": "shx rm -rf ./dist/* && tsup",
-      "test": "vitest"
-   },
-   "engines": {
-      "node": ">=22.14.x"
-   },
-   "files": [
-      "dist"
-   ],
    "main": "index.js",
    "exports": {
       ".": {
@@ -25,11 +13,31 @@
          "default": "./dist/index.js"
       }
    },
+   "scripts": {
+      "preinstall": "npx only-allow pnpm",
+      "dev": "tsup --watch ./src/index.ts",
+      "build": "shx rm -rf ./dist/* && tsup",
+      "test": "vitest",
+      "changeset": "changeset",
+      "version": "changeset version"
+   },
+   "engines": {
+      "node": ">=22.14.x"
+   },
+   "files": [
+      "dist"
+   ],
    "keywords": [
       "core",
       "utilities"
    ],
+   "homepage": "https://github.com/naceventures/utils",
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/naceventures/utils"
+   },
    "devDependencies": {
+      "@changesets/cli": "^2.27.12",
       "@eslint/compat": "^1.2.6",
       "@eslint/js": "^9.20.0",
       "eslint": "^9.20.1",
