@@ -1,5 +1,11 @@
 # @naceventures/utils
 
+## 1.0.4
+
+### Patch Changes
+
+- Bump version
+
 ## 1.0.3
 
 ### Patch Changes
