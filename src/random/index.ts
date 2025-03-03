@@ -3,7 +3,12 @@ import {
    generateRandomIntegerNumber as _generateRandomIntegerNumber,
    generateRandomString as _generateRandomString,
 } from '@oslojs/crypto/random'
-import { encodeBase32LowerCaseNoPadding, encodeBase64urlNoPadding } from '@oslojs/encoding'
+import {
+   encodeHexLowerCase,
+   encodeBase32LowerCaseNoPadding,
+   encodeBase64NoPadding,
+   encodeBase64urlNoPadding
+} from '@oslojs/encoding'
 
 // ========== Constants ==========
 
@@ -57,6 +62,11 @@ function generateLongId(): string {
 
 /* Token */
 
+function generateRandomHex(byteLength: number): string {
+   const bytes = generateRandomBytes(byteLength)
+   return encodeHexLowerCase(bytes)
+}
+
 function generateRandomBase32(byteLength: number): string {
    const bytes = generateRandomBytes(byteLength)
    return encodeBase32LowerCaseNoPadding(bytes)
@@ -64,7 +74,7 @@ function generateRandomBase32(byteLength: number): string {
 
 function generateRandomBase64(byteLength: number): string {
    const bytes = generateRandomBytes(byteLength)
-   return encodeBase64urlNoPadding(bytes)
+   return encodeBase64NoPadding(bytes)
 }
 
 function generateRandomBase64url(byteLength: number): string {
@@ -80,6 +90,7 @@ export const random = {
    generateRandomBytes,
    generateShortId,
    generateLongId,
+   generateRandomHex,
    generateRandomBase32,
    generateRandomBase64,
    generateRandomBase64url,

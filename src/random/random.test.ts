@@ -7,6 +7,7 @@ const {
    generateRandomBytes,
    generateShortId,
    generateLongId,
+   generateRandomHex,
    generateRandomBase32,
    generateRandomBase64,
    generateRandomBase64url,
@@ -55,6 +56,19 @@ describe('Random', () => {
    })
 
    describe('Tokens', () => {
+      it('should generate an hex random token with 16, 32 and 64 bytes', () => {
+         const token16 = generateRandomHex(16)
+         const token32 = generateRandomHex(32)
+         const token64 = generateRandomHex(64)
+
+         expect(token16).toBeTypeOf('string')
+         expect(token32).toBeTypeOf('string')
+         expect(token64).toBeTypeOf('string')
+         expect(token16).toHaveLength(32)
+         expect(token32).toHaveLength(64)
+         expect(token64).toHaveLength(128)
+      })
+
       it('should generate a base32 random token with 16, 32 and 64 bytes', () => {
          const token16 = generateRandomBase32(16)
          const token32 = generateRandomBase32(32)
