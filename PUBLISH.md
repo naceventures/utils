@@ -29,7 +29,3 @@ ggp
 gco develop
 ggl
 ```
-- Make a commit
-- Create a Changeset with `pnpm run changeset`
-- Commit the
-- Merge the `develop` branch into the `main` branch with ``
