@@ -1,5 +1,17 @@
 # @naceventures/utils
 
+## 1.2.0
+
+### Minor Changes
+
+- Add `.sleep(ms: number)` function under the `async` namespace to pause code execution
+- Add `.traverse(node: Node, modifier: Modifier, options: TraverseOptions = {}): Node` under the `obj` namespace to traverse an object and apply a modifier function to each node
+- Add `.walk(node: Node, path: Path, modifier: Modifier, options: WalkOptions = {}): Node` under the `obj` namespace to visit the object at a given path and apply a modifier to each segment of the path
+
+### Patch Changes
+
+- Updated the README.md
+
 ## 1.1.0
 
 ### Minor Changes
