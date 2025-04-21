@@ -26,9 +26,23 @@ Utils.dt.add(...)
 // OR
 dt.add(...)
 
+// string
+str.normalizeEmail('some.name.middleName+extension@gmail.com')
+//=> 'somenamemiddlename@gmail.com'
+
 // datetime
 dt.add('2025-01-29T11:30:25.100Z', 'PT5H')
 //=> Temporal.Instant('2025-01-29T16:30:25.100Z')
+
+// object
+const json = { a: { b: { c: { d: 4, e: 5 } } } }
+const mod = (ctx) => ctx.node.isLeaf && return 0
+obj.walk(json, ['a', 'b', 'c', 'e'], mod)
+//=> { a: { b: { c: { d: 4, e: 0 } } } }
+
+// async
+await async.sleep(500)
+//=> The program will wait 500ms before continuing
 
 // encoding
 enc.encodeToBase64url(new Uint8Array([10, 20, 30, 40, 50]))
@@ -54,22 +68,53 @@ const data = {
    email: 'user@valid.com',
 }
 
-parseZod(emailSchema, data)
+parse.parseZod(emailSchema, data)
 //=> successfully parsed
 
 // Random
 rand.generateRandomBase32(16)
 //=> kvbvhswtnh3g3244c4j3ezrb7e
 
-// String
-str.normalizeEmail('some.name.middleName+extension@gmail.com')
-//=> 'somenamemiddlename@gmail.com'
-
 // Validate
 val.isBase64('SGVsbG8gV29ybGQ')
 //=> true
 ```
+
 ## API
+
+### 🧵 str
+
+#### Escape
+
+##### `.escapeHtml(str: string): string`
+
+Escape potentially harmful HTML characters
+
+- Replace `'` with `&#39;`
+- Replace `\/` with `&#47;`
+- Replace `\\` with `&#92;`
+- Replace ``` with `&#96;`
+- Replace `"` with `&quot;`
+- Replace `>` with `&gt;`
+- Replace `<` with `&lt;`
+- Replace `&` with `&amp;`
+
+##### `.unescapeHtml(str: string): string`
+
+Unescape potentially harmful characters
+
+- Replace `&#39;` with `'`
+- Replace `&#47;` with `\/`
+- Replace `&#92;` with `\\`
+- Replace `&#96;` with ```
+- Replace `&quot;` with `"`
+- Replace `&gt;` with `>`
+- Replace `&lt;` with `<`
+- Replace `&amp;` with `&`
+
+##### `.normalizeEmail(email: string): string | null`
+
+Trim, lowercase and normalize common email docmains (google, icloud, outlook, yahoo, yandex)
 
 ### 🕐 dt
 
@@ -109,6 +154,81 @@ Substract a period to a date
 const instant = Temporal.Now.instant()
 instant.substract('PT10M')
 ```
+
+### 📦 obj
+
+#### Traverse and Walk
+
+`traverse()` and `walk()` recursively visit every node of the base object and apply a modifier function to each node.
+
+The modifier function takes a node context parameter containing the current node metadata so that for each visit, the user can apply modifications conditionally.
+
+```ts
+type Node = JSONValue
+type Parent = JSONObject | JSONArray | null
+type Path = Array<string | number>
+type Key = string | number | null
+type Modifier = (context: NodeContext) => JSONValue | undefined | void
+
+interface NodeContext {
+   node: Node
+   parent: JSONObject | JSONArray | null
+   path: Path
+   key: string | number | null
+   isRoot: boolean
+   isLeaf: boolean
+}
+```
+
+##### `traverse(node: Node, modifier: Modifier, options: TraverseOptions = {}): Node`
+
+`traverse()` visits all nodes of the base object and applies the modifier function to all of them.
+
+```ts
+interface TraverseOptions {}
+```
+
+```ts
+const obj = { a: { b: { c: 1, d: 2 }, e: 3 } }
+
+const result = traverse(obj, (ctx) => {
+   if (ctx.isLeaf && typeof ctx.node === 'number') {
+      return ctx.node + 1
+   }
+})
+
+console.log(result)
+// => { a: { b: { c: 2, d: 3 }, e: 4 } }
+```
+
+##### `walk(node: Node, path: Path, modifier: Modifier, options: WalkOptions = {}): Node`
+
+`walk()` only visits the path specified as argument and apply the modifier function to all segments of the path
+
+```ts
+interface WalkOptions {
+   strict?: boolean
+}
+```
+
+```ts
+const obj = { a: { b: { c: 1, d: 2 }, e: 3 } }
+
+const result = walk(obj, ['a', 'b', 'd'], (ctx) => {
+   if (ctx.isLeaf && typeof ctx.node === 'number') {
+      return ctx.node + 1
+   }
+})
+
+console.log(result)
+// => { a: { b: { c: 1, d: 3 }, e: 3 } }
+```
+
+### ⚡️ async
+
+##### `.sleep(ms: number): Promise<unknown>`
+
+Pause the execution of code for a specified duration in millisecond
 
 ### 🧲 enc
 
@@ -276,40 +396,6 @@ Generate a random base64 encoded string from `byteLength` bytes
 ##### `.generateRandomBase64url(byteLength: number): string`
 
 Generate a random base64url encoded string from `byteLength` bytes
-
-### 🧵 str
-
-#### Escape
-
-##### `.escapeHtml(str: string): string`
-
-Escape potentially harmful HTML characters
-
-- Replace `'` with `&#39;`
-- Replace `\/` with `&#47;`
-- Replace `\\` with `&#92;`
-- Replace ``` with `&#96;`
-- Replace `"` with `&quot;`
-- Replace `>` with `&gt;`
-- Replace `<` with `&lt;`
-- Replace `&` with `&amp;`
-
-##### `.unescapeHtml(str: string): string`
-
-Unescape potentially harmful characters
-
-- Replace `&#39;` with `'`
-- Replace `&#47;` with `\/`
-- Replace `&#92;` with `\\`
-- Replace `&#96;` with ```
-- Replace `&quot;` with `"`
-- Replace `&gt;` with `>`
-- Replace `&lt;` with `<`
-- Replace `&amp;` with `&`
-
-##### `.normalizeEmail(email: string): string | null`
-
-Trim, lowercase and normalize common email docmains (google, icloud, outlook, yahoo, yandex)
 
 ### 👍 val
 
