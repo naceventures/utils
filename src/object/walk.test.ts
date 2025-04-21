@@ -212,7 +212,7 @@ describe('walk', () => {
    test('should log each step', () => {
       const obj = { a: { b: { c: 1, d: 4 } } }
 
-      vi.spyOn(console, 'log')
+      vi.spyOn(console, 'log').mockImplementation(() => {})
 
       walk(obj, ['a', 'b', 'c'], (ctx) => {
          console.log(ctx.node)
