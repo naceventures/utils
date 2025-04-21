@@ -3,7 +3,7 @@
 ```bash
 # Commit the changes
 ga .
-gcm "scope: commit message"
+gcmsg "scope: commit message"
 
 # Run tests
 pnpm run test
@@ -15,18 +15,19 @@ pnpm run version
 
 # Commit the Changelog and the package.json with the bumped version
 ga .
-gcm "chore: release version x.x.x"
+gcmsg "chore: release version x.x.x"
 
-# Merge develop into main
+# Pull main from origin and merge develop into main
 gco main
-git merge develop
+ggl
+gm develop
 
 # Push the main branch to github
-git push origin main
+ggp
 
-#
+# Pull latest change from develop
 gco develop
-git pull original develop
+ggl
 ```
 - Make a commit
 - Create a Changeset with `pnpm run changeset`
