@@ -25,7 +25,9 @@ gm develop
 # Push the main branch to github
 ggp
 
-# Pull latest change from develop
+# === WAIT FOR GITHUB ACTION TO FINISH
+
+# Pull latest change from develop (because main has been merged into develop after GitHub Action)
 gsw develop
 ggl
 ```
