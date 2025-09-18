@@ -1,5 +1,11 @@
 # @naceventures/utils
 
+## 1.3.1
+
+### Patch Changes
+
+-  - Rename `generateRandomOTP` to `generateRandomNumericOTP`
+
 ## 1.3.0
 
 ### Minor Changes

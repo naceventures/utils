@@ -8,7 +8,7 @@ const {
    generateRandomBytes,
    generateShortId,
    generateLongId,
-   generateRandomOTP,
+   generateRandomNumericOTP,
    generateRandomHex,
    generateRandomBase32,
    generateRandomBase64,
@@ -59,7 +59,7 @@ describe('Random', () => {
 
    describe('OTP', () => {
       it('should generate an OTP', () => {
-         const otp = generateRandomOTP(6)
+         const otp = generateRandomNumericOTP(6)
 
          expect(otp).toBeTypeOf('string')
          expect(otp).toHaveLength(6)

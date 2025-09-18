@@ -38,7 +38,7 @@ function generateRandomBytes(byteLength: number): Uint8Array {
 
 /* OTP */
 
-function generateRandomOTP(length: number): string {
+function generateRandomNumericOTP(length: number): string {
    return _generateRandomString(randomSource, ALPHABET.all.numeric, length)
 }
 
@@ -82,7 +82,7 @@ export const random = {
    generateRandomBytes,
    generateShortId,
    generateLongId,
-   generateRandomOTP,
+   generateRandomNumericOTP,
    generateRandomHex,
    generateRandomBase32,
    generateRandomBase64,
