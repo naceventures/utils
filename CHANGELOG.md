@@ -1,5 +1,11 @@
 # @naceventures/utils
 
+## 1.3.0
+
+### Minor Changes
+
+-  - Add `.generateRandomOTP(length: number)` function under the `rand` namespace
+
 ## 1.2.0
 
 ### Minor Changes
