@@ -18,7 +18,7 @@ ga .
 gcmsg "chore: release version x.x.x"
 
 # Pull main from origin and merge develop into main
-gco main
+gsw main
 ggl
 gm develop
 
@@ -26,10 +26,6 @@ gm develop
 ggp
 
 # Pull latest change from develop
-gco develop
+gsw develop
 ggl
 ```
-- Make a commit
-- Create a Changeset with `pnpm run changeset`
-- Commit the
-- Merge the `develop` branch into the `main` branch with ``

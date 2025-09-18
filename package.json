@@ -2,7 +2,7 @@
    "name": "@naceventures/utils",
    "description": "Utilities",
    "author": "naceventures",
-   "version": "1.2.0",
+   "version": "1.3.0",
    "private": false,
    "type": "module",
    "main": "index.js",
