@@ -421,9 +421,9 @@ Generate a random long ID with 32 characters
 
 #### OTP
 
-##### `.generateRandomOTP(length: number): string`
+##### `.generateRandomNumericOTP(length: number): string`
 
-Generate a random OTP of length `length`. OTP is an all-numeric string
+Generate a random numeric OTP of length `length`. This OTP is an all-numeric string
 
 #### Token
 
