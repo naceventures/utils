@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { random } from './'
+import { ALPHABET } from './alphabet'
 
 const {
    generateRandomInteger,
@@ -7,6 +8,7 @@ const {
    generateRandomBytes,
    generateShortId,
    generateLongId,
+   generateRandomOTP,
    generateRandomHex,
    generateRandomBase32,
    generateRandomBase64,
@@ -25,7 +27,7 @@ describe('Random', () => {
       })
 
       it('should generate a random string', () => {
-         const randomString = generateRandomString(10)
+         const randomString = generateRandomString(10, ALPHABET.all.alphaNumeric)
 
          expect(randomString).toBeTypeOf('string')
          expect(randomString).toHaveLength(10)
@@ -52,6 +54,16 @@ describe('Random', () => {
 
          expect(longId).toBeTypeOf('string')
          expect(longId).toHaveLength(32)
+      })
+   })
+
+   describe('OTP', () => {
+      it('should generate an OTP', () => {
+         const otp = generateRandomOTP(6)
+
+         expect(otp).toBeTypeOf('string')
+         expect(otp).toHaveLength(6)
+         expect(otp).toMatch(/^\d+$/)
       })
    })
 

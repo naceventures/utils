@@ -7,6 +7,7 @@ import { encryption } from './encryption'
 import { hashing } from './hashing'
 import { parsing } from './parsing'
 import { random } from './random'
+import { ALPHABET } from './random/alphabet'
 import { validate } from './validate'
 
 export const str = { ...string }
@@ -19,6 +20,7 @@ export const hash = { ...hashing }
 export const parse = { ...parsing }
 export const rand = { ...random }
 export const val = { ...validate }
+export { ALPHABET }
 
 export const Utils = {
    str,
@@ -31,4 +33,5 @@ export const Utils = {
    parse,
    rand,
    val,
+   ALPHABET,
 }

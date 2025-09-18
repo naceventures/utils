@@ -20,7 +20,7 @@ You can either import `Utils` or individual namespaces but you can't import indi
 ```ts
 import { Utils } from '@naceventures/utils'
 // OR
-import { dt, enc, crypt, hash, parse, rand, str, val } from '@naceventures/utils'
+import { dt, enc, crypt, hash, parse, rand, str, val, ALPHABET } from '@naceventures/utils'
 
 Utils.dt.add(...)
 // OR
@@ -360,9 +360,45 @@ Parse data given a Zod schema. Return a monad containing either the validated da
 
 Generate a random integer between 0 included and `max` excluded
 
-##### `.generateRandomString(length: number): string`
+##### `.generateRandomString(length: number, alphabet: string): string`
 
-Generate a random string of length `length`
+Generate a random string of length `length` with a predefined set of characters (`alphabet`)
+
+```ts
+import { ALPHABET } from '@naceventures/utils'
+```
+
+The `ALPHABET` export, gives you a set of characters to be used with the `.generateRandomString()` function.
+
+```ts
+// Definitions of the ALPHABET export
+interface ALPHABET = {
+   // This gives all numbers and letters
+   all: {
+      numeric                 // 0123456789
+      lowerAlphabetic         // acdefhjkmnpqrstuvwxyz
+      upperAlphabetic         // ACDEFHJKMNPQRSTUVWXYZ
+      lowerAlphaNumeric       // numeric + lowerAlphabetic
+      upperAlphaNumeric       // numeric + upperAlphabetic
+      alphaNumeric            // numeric + lowerAlphabetic + upperAlphabetic
+   }
+   // This gives only safe number and letters that avoid confusion
+   safe: {
+      numeric                 // 234567
+      lowerAlphabetic         // acdefhjkmnpqrstuvwxyz
+      upperAlphabetic         // ACDEFHJKMNPQRSTUVWXYZ
+      lowerAlphaNumeric       // numeric + lowerAlphabetic
+      upperAlphaNumeric       // numeric + upperAlphabetic
+      alphaNumeric            // numeric + lowerAlphabetic + upperAlphabetic
+   },
+}
+```
+
+The confusing characters are
+- 0, o, O
+- 1, i, I, l, L
+- 8, b, B
+- 9, g, G
 
 ##### `.generateRandomBytes(byteLength: number): Uint8Array`
 
@@ -382,6 +418,12 @@ Generate a random short ID with 16 characters
 ##### `.generateLongId(): string`
 
 Generate a random long ID with 32 characters
+
+#### OTP
+
+##### `.generateRandomOTP(length: number): string`
+
+Generate a random OTP of length `length`. OTP is an all-numeric string
 
 #### Token
 

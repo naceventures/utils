@@ -7,25 +7,11 @@ import {
    encodeHexLowerCase,
    encodeBase32LowerCaseNoPadding,
    encodeBase64NoPadding,
-   encodeBase64urlNoPadding
+   encodeBase64urlNoPadding,
 } from '@oslojs/encoding'
+import { ALPHABET } from './alphabet'
 
-// ========== Constants ==========
-
-// Removed confusing
-/**
- * Removed
- * - 0, o, O
- * - 1, i, I, l, L
- * - 8, b, B
- * - 9, g, G
- */
-const NUMERIC = '234567'
-const LOWER = 'acdefhjklmnpqrstuvwxyz'
-const UPPER = 'ACDEFHJKLMNPQRSTUVWXYZ'
-const ALPHABET = `${NUMERIC}${LOWER}${UPPER}`
-
-// ========== Helpers ==========
+// ========== Random Source ==========
 
 const randomSource: RandomReader = {
    read(bytes) {
@@ -41,8 +27,8 @@ function generateRandomInteger(max: number): number {
    return _generateRandomIntegerNumber(randomSource, max)
 }
 
-function generateRandomString(length: number): string {
-   return _generateRandomString(randomSource, ALPHABET, length)
+function generateRandomString(length: number, alphabet: string): string {
+   return _generateRandomString(randomSource, alphabet, length)
 }
 
 function generateRandomBytes(byteLength: number): Uint8Array {
@@ -50,14 +36,20 @@ function generateRandomBytes(byteLength: number): Uint8Array {
    return bytes
 }
 
+/* OTP */
+
+function generateRandomOTP(length: number): string {
+   return _generateRandomString(randomSource, ALPHABET.all.numeric, length)
+}
+
 /* ID */
 
 function generateShortId(): string {
-   return generateRandomString(16)
+   return generateRandomString(16, ALPHABET.all.alphaNumeric)
 }
 
 function generateLongId(): string {
-   return generateRandomString(32)
+   return generateRandomString(32, ALPHABET.all.alphaNumeric)
 }
 
 /* Token */
@@ -90,6 +82,7 @@ export const random = {
    generateRandomBytes,
    generateShortId,
    generateLongId,
+   generateRandomOTP,
    generateRandomHex,
    generateRandomBase32,
    generateRandomBase64,
